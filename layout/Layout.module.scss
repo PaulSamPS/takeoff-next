@@ -1,0 +1,14 @@
+.wrapper {
+  margin: 0 auto;
+
+  header {
+    width: 100%;
+    background: $white;
+    border-bottom: 1px solid $border-bottom;
+  }
+
+  main {
+    width: 990px;
+    margin: 0 auto;
+  }
+}

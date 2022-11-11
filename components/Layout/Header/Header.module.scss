@@ -1,0 +1,20 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	width: 990px;
+	height: 48px;
+	margin: 0 auto;
+	color: $greyDark;
+	background: $white;
+	padding: 0 20px;
+
+	.logo {
+		color: $greyDark;
+		text-decoration: none;
+		margin-right: 40px;
+	}
+
+	.search {
+		width: 230px !important;
+	}
+}
