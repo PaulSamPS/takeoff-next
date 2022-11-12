@@ -3,6 +3,7 @@ import NumberFormat from 'react-number-format';
 import styles from './PhoneInput.module.scss';
 import { Button } from '@/components/UI';
 import { useAuth } from '@/hooks';
+import { CloseIcon } from '@/helpers/icons';
 
 type InputValueState = {
   formattedValue: string;
@@ -11,6 +12,7 @@ type InputValueState = {
 
 export const PhoneInput = () => {
   const [values, setValues] = React.useState<InputValueState>({} as InputValueState);
+
   const {
     onSubmitPhone, stopTimer, minutes, seconds,
   } = useAuth();

@@ -19,8 +19,8 @@ export const CodeInput = () => {
 
   const onSubmit = async (code: string) => {
     setIsLoading(true);
-    await axios.post('http://localhost:4000/api/auth/enter-code', { code, userId }).then((res) => {
-      console.log(res.data);
+    await axios.post('http://localhost:4000/api/auth/enter-code', { code, userId }, { withCredentials: true }).then((res) => {
+      localStorage.removeItem('code');
       router.push('/news');
     }).catch((e: AxiosError<{ message: string }>) => {
       setErr(e.response?.data.message!);
