@@ -1,6 +1,14 @@
 .form {
   position: relative;
 
+  span {
+    position: absolute;
+    bottom: -17px;
+    left: 27px;
+    color: #9D9D9D;
+    font-size: 11px;
+  }
+
   input {
     padding: 24px 12px 8px;
     width: 100%;

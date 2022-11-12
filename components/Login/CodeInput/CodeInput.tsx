@@ -1,41 +1,37 @@
 import React, { ChangeEvent, useContext } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import styles from './CodeInput.module.scss';
-import { Button } from '@/components/UI';
 import { StepContext } from '@/context';
+import { useAuth } from '@/hooks';
 
 export const CodeInput = () => {
   const [codes, setCodes] = React.useState<string[]>(['', '', '', '']);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [err, setErr] = React.useState<string | null>(null);
   const {
-    userId, setStep, phone, setUserId,
+    userId, setStep, phone,
   } = useContext(StepContext);
+  const {
+    onSubmitPhone, stopTimer, minutes, seconds,
+  } = useAuth();
   const router = useRouter();
 
   const onSubmit = async (code: string) => {
-    try {
-      setIsLoading(true);
-      const res = await axios.post('http://localhost:4000/api/auth/enter-code', { code, userId });
-      console.log(res.data);
-      await router.push('/news');
-    } catch (e) {
-      console.log(e);
-      setCodes(['', '', '', '']);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const resendCode = async () => {
-    const res = await axios.post('http://localhost:4000/api/auth/send-code', { phone });
     setIsLoading(true);
-    setUserId(res.data);
+    await axios.post('http://localhost:4000/api/auth/enter-code', { code, userId }).then((res) => {
+      console.log(res.data);
+      router.push('/news');
+    }).catch((e: AxiosError<{ message: string }>) => {
+      setErr(e.response?.data.message!);
+      setCodes(['', '', '', '']);
+    });
   };
 
   const handleChangeInput = async (event: ChangeEvent<HTMLInputElement>) => {
     const index = Number(event.target.getAttribute('id'));
     const { value } = event.target;
+    setErr(null);
     setCodes((prev) => {
       const newArr = [...prev];
       newArr[index] = value;
@@ -49,11 +45,12 @@ export const CodeInput = () => {
   };
   return (
     <div className={styles.codeInput}>
+      {err && <span className={styles.err}>{err}</span>}
       <div className={styles.enterCode}>
         {codes.map((code, index) => (
           <input
             key={index}
-            type="tel"
+            type="text"
             placeholder=""
             maxLength={1}
             id={String(index)}
@@ -63,7 +60,8 @@ export const CodeInput = () => {
         ))}
       </div>
       <div className={styles.options}>
-        <p onClick={resendCode}>Получить новый код</p>
+        {!stopTimer ? <span>{`Повторная отправка возможна через: ${`${minutes}:${seconds < 10 && typeof seconds !== 'string' ? '0' : ''}${seconds}`}`}</span>
+          : <p onClick={() => onSubmitPhone(phone)}>Получить новый код</p>}
         <p onClick={() => setStep(0)}>Ввести другой телефон</p>
       </div>
     </div>

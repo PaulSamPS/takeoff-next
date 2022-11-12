@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import NumberFormat from 'react-number-format';
-import axios from 'axios';
 import styles from './PhoneInput.module.scss';
 import { Button } from '@/components/UI';
-import { StepContext } from '@/context';
+import { useAuth } from '@/hooks';
 
 type InputValueState = {
   formattedValue: string;
@@ -12,26 +11,14 @@ type InputValueState = {
 
 export const PhoneInput = () => {
   const [values, setValues] = React.useState<InputValueState>({} as InputValueState);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const { setUserId, nextStep, setPhone } = useContext(StepContext);
-
-  const onSubmitPhone = async () => {
-    try {
-      const res = await axios.post('http://localhost:4000/api/auth/send-code', { phone: values.formattedValue });
-      setIsLoading(true);
-      setUserId(res.data);
-      setPhone(values.formattedValue);
-      nextStep();
-    } catch (e) {
-      console.warn('Ошибка при звонке', e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    onSubmitPhone, stopTimer, minutes, seconds,
+  } = useAuth();
 
   return (
     <>
       <div className={styles.form}>
+        {!stopTimer && <span>{`Повторная отправка возможна через: ${`${minutes}:${seconds < 10 && typeof seconds !== 'string' ? '0' : ''}${seconds}`}`}</span>}
         <NumberFormat
           name="phone"
           format="+7 (###) ###-##-##"
@@ -42,7 +29,7 @@ export const PhoneInput = () => {
         />
         <label htmlFor="phone">Телефон</label>
       </div>
-      <Button appearance="primary" className={styles.btn} onClick={onSubmitPhone}>Отправить код</Button>
+      <Button appearance="primary" className={styles.btn} onClick={() => onSubmitPhone(values.formattedValue)} disabled={!stopTimer}>Отправить код</Button>
     </>
   );
 };
