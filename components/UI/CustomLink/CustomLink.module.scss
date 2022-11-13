@@ -1,0 +1,43 @@
+.link {
+	display: grid;
+	grid-template-columns: 18px 1fr 25px;
+	align-items: center;
+	padding: 0 5px;
+	color: $black;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 30px;
+	text-decoration: none;
+	column-gap: 10px;
+	transition: color ease 0.2s;
+
+	&:hover {
+		background: rgb(174 183 194 / 10%);
+	}
+
+	svg {
+		max-width: 20px;
+		max-height: 20px;
+	}
+}
+
+.rightMenu {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px 20px;
+	color: $blue;
+	border-left: 2px solid transparent;
+	transition: all ease 0.2s;
+}
+
+.activeRightBar {
+	color: $black;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 30px;
+	text-decoration: none;
+	background: rgb(174 183 194 / 16%);
+	border-left: 2px solid $blue;
+	transition: color ease 0.2s;
+}

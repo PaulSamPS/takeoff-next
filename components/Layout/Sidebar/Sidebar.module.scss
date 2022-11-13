@@ -1,0 +1,27 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+
+	a {
+		display: flex;
+		align-items: center;
+		font-size: 14px;
+		column-gap: 5px;
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		.icon {
+			color: $blue;
+			width: 16px !important;
+			height: 16px !important;
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}

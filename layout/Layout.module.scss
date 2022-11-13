@@ -10,5 +10,22 @@
   main {
     width: 990px;
     margin: 0 auto;
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: 160px 1fr 260px;
+    grid-template-areas: 'sidebar content rightBar';
+    padding: 20px;
+
+    .sidebar {
+      grid-area: sidebar;
+    }
+
+    .content {
+      grid-area: content;
+    }
+
+    .rightBar {
+      grid-area: rightBar;
+    }
   }
 }

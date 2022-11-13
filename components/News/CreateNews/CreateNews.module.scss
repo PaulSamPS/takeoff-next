@@ -1,0 +1,90 @@
+.createPost {
+	display: grid;
+	grid-template-areas: "avatar text icon" "image image image" "bottom bottom bottom";
+	grid-template-columns: 30px 1fr 20px;
+	align-items: flex-start;
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 20px;
+	column-gap: 10px;
+	background: $white;
+	border-radius: 8px;
+	box-shadow: 0 1px 0 0 #DCE1E6, 0 0 0 1px #E7E8EC;
+
+	.avatar {
+		grid-area: avatar;
+		width: 30px;
+		height: 30px;
+		object-fit: cover;
+		border-radius: 50%;
+	}
+
+	.textarea {
+		grid-area: text;
+		width: 100%;
+		padding: 7px;
+		overflow: hidden;
+		color: $grey;
+		font-size: 13px;
+		word-wrap: break-word;
+		border: none;
+		resize: none;
+
+		&::placeholder {
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.icons {
+		grid-area: icon;
+		justify-self: flex-end;
+		padding-top: 4px;
+
+		.file {
+			position: absolute;
+			visibility: hidden;
+			opacity: 0;
+			width: 20px;
+		}
+
+		.icon {
+			cursor: pointer;
+			transition: all ease 0.2s;
+
+			color: $grey !important;
+
+			&:hover {
+				color: $blue !important;
+			}
+		}
+	}
+
+	.postImage {
+		display: flex;
+		grid-area: image;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin-top: 20px;
+
+		img {
+			width: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.openBlock {
+		display: flex;
+		grid-area: bottom;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 40px;
+
+		.publish {
+			grid-area: button;
+		}
+	}
+}
